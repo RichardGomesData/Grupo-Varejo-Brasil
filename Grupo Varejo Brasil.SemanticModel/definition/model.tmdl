@@ -29,5 +29,11 @@ ref table tbPedidoRegiao
 ref table tbSelecao
 ref table tbMetaAno
 
+ref role RegiaoSUL
+ref role RegiaoCENTRO-OESTE
+ref role RegiaoNORDESTE
+ref role RegiaoNORTE
+ref role RegiaoSUDESTE
+
 ref cultureInfo pt-BR
 

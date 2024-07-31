@@ -97,6 +97,23 @@ table _Medidas
 
 		annotation PBI_FormatHint = {"isGeneralNumber":true}
 
+	measure Média = AVERAGEX(tbPedidoDet, [ValorVenda])
+		lineageTag: 8bb4abba-de1f-40df-b996-e63c7e6af000
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure Usuário = USERNAME()
+		lineageTag: 7ad8f925-249a-4122-b23c-b37f8084171b
+
+	measure BotaoCor = if([Usuário] = "Richard_Win\Richard" || [Usuário] = "aluno.1799@ebac.art.br", "#0B856F","#3A3A3A")
+		lineageTag: 2f09665c-e8be-4798-a833-82dbfba41c56
+
+	measure BotaoTexto = if([Usuário] = "Richard_Win\Richard" || [Usuário] = "aluno.1799@ebac.art.br", "Relatório Gerencial","")
+		lineageTag: 9177283c-8ce5-4f39-a3ff-c9241e21aea6
+
+	measure BotaoDestino = if([Usuário] = "Richard_Win\Richard" || [Usuário] = "aluno.1799@ebac.art.br", "Relatório Gerencial","Vendas por Mês")
+		lineageTag: ea014c09-c488-425d-a071-23c442b76bdf
+
 	column Column1
 		dataType: string
 		isHidden

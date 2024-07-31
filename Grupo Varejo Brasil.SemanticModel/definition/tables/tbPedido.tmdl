@@ -91,7 +91,7 @@ table tbPedido
 				in
 				    #"Inserted Year2"
 
-	annotation PBI_NavigationStepName = Navigation
-
 	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
 

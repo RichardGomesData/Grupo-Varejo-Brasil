@@ -1,0 +1,7 @@
+role RegiaoSUL
+	modelPermission: read
+
+	tablePermission tbPedidoRegiao = [Região] == "Sul"
+
+	annotation PBI_Id = 8eac785e8e6343459e1bb24708aa47df
+
