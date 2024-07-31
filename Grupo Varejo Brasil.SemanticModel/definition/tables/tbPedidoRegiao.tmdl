@@ -1,0 +1,30 @@
+table tbPedidoRegiao
+	lineageTag: 23c4ccb0-bb76-4907-97b0-b254c7b95790
+
+	column NroPedido
+		dataType: int64
+		formatString: 0
+		lineageTag: 5ed6d05c-1625-4e9e-9745-982437102762
+		summarizeBy: none
+		isNameInferred
+		isDataTypeInferred
+		sourceColumn: tbPedidoMetaDados[NroPedido]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Região
+		dataType: string
+		lineageTag: 713f1ed1-4064-4fe0-b416-5175592d5247
+		summarizeBy: none
+		isNameInferred
+		isDataTypeInferred
+		sourceColumn: tbPedidoMetaDados[Região]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition tbPedidoRegiao = calculated
+		mode: import
+		source = GROUPBY(FILTER(tbPedidoMetaDados,tbPedidoMetaDados[Região]<>""),tbPedidoMetaDados[NroPedido],tbPedidoMetaDados[Região])
+
+	annotation PBI_Id = 1011535b00ea4a32b06f4de96a4a008d
+

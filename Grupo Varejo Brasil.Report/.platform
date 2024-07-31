@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Report",
+    "displayName": "Grupo Varejo Brasil"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "512206d4-a1be-4db5-8935-79d1f9677cc5"
+  }
+}

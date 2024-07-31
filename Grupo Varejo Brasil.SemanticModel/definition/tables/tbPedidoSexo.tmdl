@@ -1,0 +1,32 @@
+table tbPedidoSexo
+	lineageTag: fe2813d4-1c2d-4d24-a8dc-d263e6c62e4f
+
+	column NroPedido
+		dataType: int64
+		formatString: 0
+		lineageTag: 553a3396-79e7-49e7-a6f0-ecd29dc934bd
+		summarizeBy: none
+		isNameInferred
+		isDataTypeInferred
+		sourceColumn: tbPedidoMetaDados[NroPedido]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Valor
+		dataType: string
+		lineageTag: af8a6623-74ed-4e69-8e08-abfc0528a6e0
+		summarizeBy: none
+		isNameInferred
+		isDataTypeInferred
+		sourceColumn: tbPedidoMetaDados[Valor]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition tbPedidoSexo = calculated
+		mode: import
+		source = ```
+				GROUPBY(FILTER(tbPedidoMetaDados,tbPedidoMetaDados[Variavel]="Sexo"),tbPedidoMetaDados[NroPedido],tbPedidoMetaDados[Valor]) 
+				```
+
+	annotation PBI_Id = b4e3aa823c2a4c53944404483972d02a
+

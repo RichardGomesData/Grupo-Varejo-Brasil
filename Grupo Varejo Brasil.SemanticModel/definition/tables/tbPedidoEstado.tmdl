@@ -1,0 +1,32 @@
+table tbPedidoEstado
+	lineageTag: 7749f799-e680-42da-883a-aef21f094e21
+
+	column NroPedido
+		dataType: int64
+		formatString: 0
+		lineageTag: ab1aefb4-a770-48a5-b394-58f4e5358b5f
+		summarizeBy: none
+		isNameInferred
+		isDataTypeInferred
+		sourceColumn: tbPedidoMetaDados[NroPedido]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Valor
+		dataType: string
+		lineageTag: 16c1dd7a-cb04-45a0-81b3-85fb3c83eada
+		summarizeBy: none
+		isNameInferred
+		isDataTypeInferred
+		sourceColumn: tbPedidoMetaDados[Valor]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition tbPedidoEstado = calculated
+		mode: import
+		source = ```
+				GROUPBY(FILTER(tbPedidoMetaDados,tbPedidoMetaDados[Variavel]="Estado"),tbPedidoMetaDados[NroPedido],tbPedidoMetaDados[Valor]) 
+				```
+
+	annotation PBI_Id = 77e94962425140bc8fdbd153a67ee427
+

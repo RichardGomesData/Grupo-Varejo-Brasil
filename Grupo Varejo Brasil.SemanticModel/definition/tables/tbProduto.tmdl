@@ -1,0 +1,43 @@
+table tbProduto
+	lineageTag: 57328bae-8d01-4250-a756-36e32220902b
+
+	column CodProduto
+		dataType: int64
+		formatString: 0
+		lineageTag: 9b723a6d-2b59-4ac8-8502-f7ff5199a23c
+		summarizeBy: none
+		sourceColumn: CodProduto
+
+		annotation SummarizationSetBy = Automatic
+
+	column DescProduto
+		dataType: string
+		lineageTag: f35d3003-40c4-4b4f-a6a9-b4c14915fecb
+		summarizeBy: none
+		sourceColumn: DescProduto
+
+		annotation SummarizationSetBy = Automatic
+
+	column CodDepto
+		dataType: int64
+		formatString: 0
+		lineageTag: aed5c768-4dae-4f56-a904-0a2127b7e9c0
+		summarizeBy: none
+		sourceColumn: CodDepto
+
+		annotation SummarizationSetBy = Automatic
+
+	partition tbProduto = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents("D:\Power BI EBAC\M2\M2 - tbProduto.csv"),[Delimiter=";", Columns=3, Encoding=65001, QuoteStyle=QuoteStyle.None]),
+				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"CodProduto", Int64.Type}, {"DescProduto", type text}, {"CodDepto", Int64.Type}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

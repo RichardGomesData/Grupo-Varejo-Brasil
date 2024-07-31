@@ -1,0 +1,33 @@
+model Model
+	culture: pt-BR
+	defaultPowerBIDataSourceVersion: powerBI_V3
+	sourceQueryCulture: pt-BR
+	dataAccessOptions
+		legacyRedirects
+		returnErrorValuesAsNull
+
+annotation PBI_QueryOrder = ["tbDepto","tbPedido","tbPedidoDet","tbPedidoMetaDados","tbProduto","_Medidas","tbSelecao","tbMetaAno"]
+
+annotation __PBI_TimeIntelligenceEnabled = 1
+
+annotation PBIDesktopVersion = 2.131.1203.0 (24.07)
+
+annotation PBI_ProTooling = ["DevMode"]
+
+ref table tbDepto
+ref table DateTableTemplate_330ac9b7-fb0d-43a7-9086-67b47051f503
+ref table tbPedido
+ref table LocalDateTable_cfdf4e1a-7d20-4aaa-b989-a86e8462ae43
+ref table tbPedidoDet
+ref table tbPedidoMetaDados
+ref table tbProduto
+ref table _Medidas
+ref table tbPedidoIdade
+ref table tbPedidoEstado
+ref table tbPedidoSexo
+ref table tbPedidoRegiao
+ref table tbSelecao
+ref table tbMetaAno
+
+ref cultureInfo pt-BR
+

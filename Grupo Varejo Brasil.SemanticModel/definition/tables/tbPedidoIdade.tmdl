@@ -1,0 +1,30 @@
+table tbPedidoIdade
+	lineageTag: 9af29bad-32e3-4054-b499-665c34cd0d96
+
+	column NroPedido
+		dataType: int64
+		formatString: 0
+		lineageTag: f823f4cb-ce36-4a2a-988d-2ff1502ed42f
+		summarizeBy: none
+		isNameInferred
+		isDataTypeInferred
+		sourceColumn: tbPedidoMetaDados[NroPedido]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Valor
+		dataType: string
+		lineageTag: 10a29979-aa1f-4730-a01d-8153a78c0b5c
+		summarizeBy: none
+		isNameInferred
+		isDataTypeInferred
+		sourceColumn: tbPedidoMetaDados[Valor]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition tbPedidoIdade = calculated
+		mode: import
+		source = GROUPBY(FILTER(tbPedidoMetaDados, tbPedidoMetaDados[Variavel]="Idade"),tbPedidoMetaDados[NroPedido],tbPedidoMetaDados[Valor])
+
+	annotation PBI_Id = df82dc139fcd4d1fb2ab2b6d820406ee
+

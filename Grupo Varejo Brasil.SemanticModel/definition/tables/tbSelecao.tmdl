@@ -1,0 +1,31 @@
+table tbSelecao
+	lineageTag: 315252e6-544c-4be5-89bb-5e69882b08d7
+
+	column CodSel
+		dataType: int64
+		formatString: 0
+		lineageTag: 05478877-9dad-456f-a6b6-0f1997a1ada3
+		summarizeBy: sum
+		sourceColumn: CodSel
+
+		annotation SummarizationSetBy = Automatic
+
+	column DescSel
+		dataType: string
+		lineageTag: 89f5a253-bd8d-4e2a-9bbc-db7987560b8c
+		summarizeBy: none
+		sourceColumn: DescSel
+
+		annotation SummarizationSetBy = Automatic
+
+	partition tbSelecao = m
+		mode: import
+		source =
+				let
+				    Source = Table.FromRows(Json.Document(Binary.Decompress(Binary.FromText("i45WMlTSUQpMzCvJTElMSVWK1YlWMgKKhCXm5BcppKQqhKXmpSSChY2BwgGpRcmpeSWliTlKsbEA", BinaryEncoding.Base64), Compression.Deflate)), let _t = ((type nullable text) meta [Serialized.Text = true]) in type table [CodSel = _t, DescSel = _t]),
+				    #"Changed Type" = Table.TransformColumnTypes(Source,{{"CodSel", Int64.Type}, {"DescSel", type text}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_ResultType = Table
+

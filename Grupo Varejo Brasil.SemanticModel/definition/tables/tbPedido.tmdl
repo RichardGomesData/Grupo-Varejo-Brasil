@@ -1,0 +1,97 @@
+table tbPedido
+	lineageTag: 8ea7b56e-9227-4068-88de-afabde44d787
+
+	column NroPedido
+		dataType: int64
+		formatString: 0
+		lineageTag: ababc185-a8a5-47c9-aa0f-df9223103bea
+		summarizeBy: none
+		sourceColumn: NroPedido
+
+		annotation SummarizationSetBy = Automatic
+
+	column DataPedido
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 0bc0ed69-8c6b-405b-8676-811f94366167
+		summarizeBy: none
+		sourceColumn: DataPedido
+
+		variation Variation
+			isDefault
+			relationship: ccb5dd32-8cba-411a-81ce-83ecf46b64b9
+			defaultHierarchy: LocalDateTable_cfdf4e1a-7d20-4aaa-b989-a86e8462ae43.'Hierarquia de datas'
+
+		annotation SummarizationSetBy = Automatic
+
+	column FormaDePagamento
+		dataType: string
+		lineageTag: c29b2472-72e9-4108-8f8a-735825ddc377
+		summarizeBy: none
+		sourceColumn: FormaDePagamento
+
+		annotation SummarizationSetBy = Automatic
+
+	column CondicaoPagamento
+		dataType: string
+		lineageTag: c1c9cec7-8d87-41ef-8ae0-bf5dd624e8d6
+		summarizeBy: none
+		sourceColumn: CondicaoPagamento
+
+		annotation SummarizationSetBy = Automatic
+
+	column AnoMes
+		dataType: string
+		lineageTag: 660b5cc9-a28a-4122-9834-7e9bdc54fbca
+		summarizeBy: none
+		sourceColumn: AnoMes
+		sortByColumn: Ordem
+
+		changedProperty = SortByColumn
+
+		annotation SummarizationSetBy = Automatic
+
+	column Ordem
+		dataType: int64
+		formatString: 0
+		lineageTag: 14713737-37b0-4d68-b5cb-c7fa3ae91255
+		summarizeBy: sum
+		sourceColumn: Ordem
+
+		annotation SummarizationSetBy = Automatic
+
+	column Year
+		dataType: int64
+		formatString: 0
+		lineageTag: 6d02a37e-9b9b-4da5-b5f2-9ce78f8e0f6b
+		summarizeBy: none
+		sourceColumn: Year
+
+		annotation SummarizationSetBy = Automatic
+
+	partition tbPedido = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents("D:\Power BI EBAC\M2\M2 - tbPedido.csv"),[Delimiter=";", Columns=5, Encoding=65001, QuoteStyle=QuoteStyle.None]),
+				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"NroPedido", Int64.Type}, {"DataPedido", type datetime}, {"FormaDePagamento", type text}, {"CondicaoPagamento", type text}, {"CodValidacao", type text}}),
+				    #"Inserted Year" = Table.AddColumn(#"Changed Type", "Year", each Date.Year([DataPedido]), Int64.Type),
+				    #"Inserted Month Name" = Table.AddColumn(#"Inserted Year", "Month Name", each Date.MonthName([DataPedido]), type text),
+				    #"Capitalized Each Word" = Table.TransformColumns(#"Inserted Month Name",{{"Month Name", Text.Proper, type text}}),
+				    #"Merged Columns" = Table.CombineColumns(Table.TransformColumnTypes(#"Capitalized Each Word", {{"Year", type text}}, "pt-BR"),{"Year", "Month Name"},Combiner.CombineTextByDelimiter("-", QuoteStyle.None),"AnoMes"),
+				    #"Inserted Year1" = Table.AddColumn(#"Merged Columns", "Year", each Date.Year([DataPedido]), Int64.Type),
+				    #"Inserted Month" = Table.AddColumn(#"Inserted Year1", "Month", each Date.Month([DataPedido]), Int64.Type),
+				    #"Changed Type1" = Table.TransformColumnTypes(#"Inserted Month",{{"Month", type text}}),
+				    #"Added Custom" = Table.AddColumn(#"Changed Type1", "MesComZeroEsquerda", each Text.PadStart([Month],2,"0")),
+				    #"Merged Columns1" = Table.CombineColumns(Table.TransformColumnTypes(#"Added Custom", {{"Year", type text}}, "pt-BR"),{"MesComZeroEsquerda", "Year"},Combiner.CombineTextByDelimiter("", QuoteStyle.None),"Ordem"),
+				    #"Changed Type2" = Table.TransformColumnTypes(#"Merged Columns1",{{"Ordem", Int64.Type}}),
+				    #"Removed Columns" = Table.RemoveColumns(#"Changed Type2",{"Month", "CodValidacao"}),
+				    #"Inserted Year2" = Table.AddColumn(#"Removed Columns", "Year", each Date.Year([DataPedido]), Int64.Type)
+				in
+				    #"Inserted Year2"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

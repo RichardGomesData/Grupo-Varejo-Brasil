@@ -1,0 +1,51 @@
+table tbPedidoMetaDados
+	lineageTag: 49ac3b24-5048-4632-b3f0-feb9ca05608c
+
+	column NroPedido
+		dataType: int64
+		formatString: 0
+		lineageTag: 1ee3ccf9-2e18-4812-b244-eea6d488eea0
+		summarizeBy: sum
+		sourceColumn: NroPedido
+
+		annotation SummarizationSetBy = Automatic
+
+	column Variavel
+		dataType: string
+		lineageTag: c3a00d38-6772-4f31-babb-5c0a89b9ea2f
+		summarizeBy: none
+		sourceColumn: Variavel
+
+		annotation SummarizationSetBy = Automatic
+
+	column Valor
+		dataType: string
+		lineageTag: d1531f98-7bbf-4329-9fa9-766e7f2617f7
+		summarizeBy: none
+		sourceColumn: Valor
+
+		annotation SummarizationSetBy = Automatic
+
+	column Região
+		dataType: string
+		lineageTag: 5b083333-ef83-4e32-b083-355ef6f7dc44
+		summarizeBy: none
+		sourceColumn: Região
+
+		annotation SummarizationSetBy = Automatic
+
+	partition tbPedidoMetaDados = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents("D:\Power BI EBAC\M2\M2 - tbPedidoMetaDados.csv"),[Delimiter=";", Columns=3, Encoding=65001, QuoteStyle=QuoteStyle.None]),
+				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"NroPedido", Int64.Type}, {"Variavel", type text}, {"Valor", type text}}),
+				    #"Added Conditional Column" = Table.AddColumn(#"Changed Type", "Região", each if [Valor] = "AM" then "Norte" else if [Valor] = "RR" then "Norte" else if [Valor] = "AP" then "Norte" else if [Valor] = "PA" then "Norte" else if [Valor] = "TO" then "Norte" else if [Valor] = "RO" then "Norte" else if [Valor] = "AC" then "Norte" else if [Valor] = "MA" then "Nordeste" else if [Valor] = "PI" then "Nordeste" else if [Valor] = "CE" then "Nordeste" else if [Valor] = "RN" then "Nordeste" else if [Valor] = "PE" then "Nordeste" else if [Valor] = "PB" then "Nordeste" else if [Valor] = "SE" then "Nordeste" else if [Valor] = "AL" then "Nordeste" else if [Valor] = "BA" then "Nordeste" else if [Valor] = "MT" then "Centro-Oeste" else if [Valor] = "MS" then "Centro-Oeste" else if [Valor] = "GO" then "Centro-Oeste" else if [Valor] = "SP" then "Sudeste" else if [Valor] = "RJ" then "Sudeste" else if [Valor] = "ES" then "Sudeste" else if [Valor] = "MG" then "Sudeste" else if [Valor] = "PR" then "Sul" else if [Valor] = "RS" then "Sul" else if [Valor] = "SC" then "Sul" else if [Valor] = "DF" then "Centro-Oeste" else null)
+				in
+				    #"Added Conditional Column"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

@@ -1,0 +1,46 @@
+relationship ccb5dd32-8cba-411a-81ce-83ecf46b64b9
+	joinOnDateBehavior: datePartOnly
+	fromColumn: tbPedido.DataPedido
+	toColumn: LocalDateTable_cfdf4e1a-7d20-4aaa-b989-a86e8462ae43.Date
+
+relationship 9fdf8db6-4617-e562-13b5-2f3aa1e91f3b
+	fromColumn: tbProduto.CodDepto
+	toColumn: tbDepto.CodDepto
+
+relationship 9fceae8c-5049-2613-ee01-d1a2abd0a27b
+	fromColumn: tbPedidoDet.CodProduto
+	toColumn: tbProduto.CodProduto
+
+relationship 923b58b3-7211-50d4-bada-b1e0b8e0c392
+	fromColumn: tbPedidoDet.NroPedido
+	toColumn: tbPedido.NroPedido
+
+relationship 7819a3ae-7a50-f924-fc72-25379bef6f09
+	crossFilteringBehavior: bothDirections
+	fromCardinality: one
+	fromColumn: tbPedidoEstado.NroPedido
+	toColumn: tbPedido.NroPedido
+
+relationship 0d91226d-0c60-846c-b628-234feff0131e
+	crossFilteringBehavior: bothDirections
+	fromCardinality: one
+	fromColumn: tbPedidoSexo.NroPedido
+	toColumn: tbPedido.NroPedido
+
+relationship 6f04c499-0365-3198-8f92-4e2851fdf5d2
+	crossFilteringBehavior: bothDirections
+	fromCardinality: one
+	fromColumn: tbPedidoIdade.NroPedido
+	toColumn: tbPedido.NroPedido
+
+relationship 463ce1b7-8b2c-19a1-807f-3bcc6c548aa4
+	crossFilteringBehavior: bothDirections
+	fromCardinality: one
+	fromColumn: tbPedidoRegiao.NroPedido
+	toColumn: tbPedido.NroPedido
+
+relationship 21923679-385b-fa74-2994-d37f47f74238
+	crossFilteringBehavior: bothDirections
+	fromColumn: tbPedido.Year
+	toColumn: tbMetaAno.Ano
+

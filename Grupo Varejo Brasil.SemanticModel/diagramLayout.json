@@ -1,0 +1,178 @@
+{
+  "version": "1.1.0",
+  "diagrams": [
+    {
+      "ordinal": 0,
+      "scrollPosition": {
+        "x": 0,
+        "y": 0
+      },
+      "nodes": [
+        {
+          "location": {
+            "x": 0,
+            "y": 394.8554418557141
+          },
+          "nodeIndex": "tbDepto",
+          "nodeLineageTag": "f05ecbf7-8403-48b6-9e35-c2cee88d4e89",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 11
+        },
+        {
+          "location": {
+            "x": 702.517305690576,
+            "y": 335.91979896735171
+          },
+          "nodeIndex": "tbPedido",
+          "nodeLineageTag": "8ea7b56e-9227-4068-88de-afabde44d787",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 12
+        },
+        {
+          "location": {
+            "x": 330.42307955647317,
+            "y": 240.69549200549446
+          },
+          "nodeIndex": "tbPedidoDet",
+          "nodeLineageTag": "c4c63a28-8b56-4815-978a-706910c6f31f",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 7
+        },
+        {
+          "location": {
+            "x": 1402.8597990993649,
+            "y": 252.55426761639831
+          },
+          "nodeIndex": "tbPedidoMetaDados",
+          "nodeLineageTag": "49ac3b24-5048-4632-b3f0-feb9ca05608c",
+          "size": {
+            "height": 152,
+            "width": 234
+          },
+          "zIndex": 8
+        },
+        {
+          "location": {
+            "x": 14.737497166000594,
+            "y": 112.59598209191377
+          },
+          "nodeIndex": "tbProduto",
+          "nodeLineageTag": "57328bae-8d01-4250-a756-36e32220902b",
+          "size": {
+            "height": 152,
+            "width": 234
+          },
+          "zIndex": 9
+        },
+        {
+          "location": {
+            "x": 1404.3071977476875,
+            "y": 123.33894047481503
+          },
+          "nodeIndex": "_Medidas",
+          "nodeLineageTag": "ea7bedf3-f543-462e-89be-cd87e1efdab5",
+          "size": {
+            "height": 104,
+            "width": 234
+          },
+          "zIndex": 10
+        },
+        {
+          "location": {
+            "x": 1020.1807157604308,
+            "y": 114.05065213943442
+          },
+          "nodeIndex": "tbPedidoIdade",
+          "nodeLineageTag": "9af29bad-32e3-4054-b499-665c34cd0d96",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 1
+        },
+        {
+          "location": {
+            "x": 1021.2804468082136,
+            "y": 561.78833848428144
+          },
+          "nodeIndex": "tbPedidoEstado",
+          "nodeLineageTag": "7749f799-e680-42da-883a-aef21f094e21",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 2
+        },
+        {
+          "location": {
+            "x": 1021.085680382668,
+            "y": 337.33953408563013
+          },
+          "nodeIndex": "tbPedidoSexo",
+          "nodeLineageTag": "fe2813d4-1c2d-4d24-a8dc-d263e6c62e4f",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 3
+        },
+        {
+          "location": {
+            "x": 721.9173377042614,
+            "y": 701.54213514486037
+          },
+          "nodeIndex": "tbPedidoRegiao",
+          "nodeLineageTag": "23c4ccb0-bb76-4907-97b0-b254c7b95790",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 4
+        },
+        {
+          "location": {
+            "x": 1402.2125688581916,
+            "y": 431.0783948863201
+          },
+          "nodeIndex": "tbSelecao",
+          "nodeLineageTag": "315252e6-544c-4be5-89bb-5e69882b08d7",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 5
+        },
+        {
+          "location": {
+            "x": 739.82598965591,
+            "y": 28.355782072537188
+          },
+          "nodeIndex": "tbMetaAno",
+          "nodeLineageTag": "ea7609ad-73e0-496e-876e-4c757b601b6e",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 6
+        }
+      ],
+      "name": "All tables",
+      "zoomValue": 70.955543900968749,
+      "pinKeyFieldsToTop": false,
+      "showExtraHeaderInfo": false,
+      "hideKeyFieldsWhenCollapsed": false,
+      "tablesLocked": false
+    }
+  ],
+  "selectedDiagram": "All tables",
+  "defaultDiagram": "All tables"
+}

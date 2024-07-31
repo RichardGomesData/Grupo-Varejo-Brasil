@@ -1,0 +1,121 @@
+table _Medidas
+	lineageTag: ea7bedf3-f543-462e-89be-cd87e1efdab5
+
+	measure ValorVenda = sumx(tbPedidoDet, (tbPedidoDet[ValorUnitario] * tbPedidoDet[Quantidade]) - tbPedidoDet[ValorDescontoItem])
+		formatString: 0
+		lineageTag: 7f0d0633-6b2f-4a42-8329-c9e6c590f175
+
+	measure Quantidade = SUM(tbPedidoDet[Quantidade])
+		formatString: 0
+		lineageTag: db951b95-cdb4-459c-b1ba-56334aaa0a7c
+
+	measure Percentual = ```
+			
+			 var ValorTotal = CALCULATE(SUMX(all(tbPedidoDet), (tbPedidoDet[ValorUnitario] * tbPedidoDet[Quantidade]) - tbPedidoDet[ValorDescontoItem]))
+			
+			var ValorDepto = [ValorVenda]
+			
+			var Resultado = DIVIDE(ValorDepto, ValorTotal, BLANK()) *100
+			
+			return 
+			Resultado
+			```
+		lineageTag: 3b7023b2-ddaa-450f-9bd8-8f14ba8d9cf2
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure BotaoAtivo = sum(tbSelecao[CodSel])
+		formatString: 0
+		lineageTag: f45e5119-6dae-4dbd-bd47-fc3e35a62d49
+
+	measure 'Valor Selecionado 1' = ```
+			
+			
+			 if([BotaoAtivo] = 1, [Quantidade], 
+			 if([BotaoAtivo] = 2, [ValorVenda],
+			 if([BotaoAtivo] = 3, [Percentual], BLANK())))
+			```
+		formatString: 0
+		lineageTag: cd7903d6-e355-4d2c-aa42-ee8b2cba1120
+
+	measure 'Valor Selecionado 2' = ```
+			
+			
+			 SWITCH(TRUE,[BotaoAtivo]=1, [Quantidade],
+			            [BotaoAtivo]=2,[ValorVenda],
+			            [BotaoAtivo]=3,[Percentual],BLANK())
+			```
+		lineageTag: 7b1f45a8-3719-47b8-83f5-afc0a349b3d8
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure TV/Audio = ```
+			
+			    CALCULATE(SUMX(tbPedidoDet, (tbPedidoDet[ValorUnitario] * tbPedidoDet[Quantidade]) - tbPedidoDet[ValorDescontoItem]), FILTER(tbDepto, tbDepto[DescDepto] = "TV, áudio"))
+			```
+		lineageTag: a96ebd58-2905-442e-b0de-ed62871021ac
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure Celulares = CALCULATE(SUMX(tbPedidoDet, (tbPedidoDet[ValorUnitario] * tbPedidoDet[Quantidade]) - tbPedidoDet[ValorDescontoItem]), FILTER(tbDepto, tbDepto[DescDepto] = "Celulares"))
+		lineageTag: c957b78a-3a07-49ea-98cc-c68a5f555d3e
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure Informática = ```
+			
+			    CALCULATE(SUMX(tbPedidoDet, (tbPedidoDet[ValorUnitario] * tbPedidoDet[Quantidade]) - tbPedidoDet[ValorDescontoItem]), FILTER(tbDepto, tbDepto[DescDepto] = "Informática"))
+			```
+		lineageTag: 3d6e319b-e871-46fd-b2ab-87b4d5f66033
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure Outros = ```
+			
+			    CALCULATE(SUMX(tbPedidoDet, (tbPedidoDet[ValorUnitario] * tbPedidoDet[Quantidade]) - tbPedidoDet[ValorDescontoItem]), FILTER(tbDepto, not tbDepto[DescDepto] IN {"TV, áudio","Celulares","Informática"}))
+			```
+		lineageTag: a5df221a-e9ab-4304-a4c5-2105caedcf42
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure TotalAcumulado = TOTALYTD([ValorVenda],tbPedido[DataPedido].[Date])
+		lineageTag: c099c366-6eb0-4973-a9cf-86a085f08550
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure Variacao = ```
+			
+			    VAR ValorAtual = [ValorVenda]
+			    VAR ValorAnterior = CALCULATE([ValorVenda], PARALLELPERIOD(tbPedido[DataPedido].[Date], -1, MONTH))
+			
+			    VAR Resultado = (DIVIDE(ValorAtual, ValorAnterior, BLANK()) -1) *100
+			
+			RETURN
+			    Resultado
+			```
+		lineageTag: bfc35cfa-ed9d-4915-81b7-e245ab782d97
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Column1
+		dataType: string
+		isHidden
+		lineageTag: a9258c8b-512d-43da-9a46-b9cc2a2f67b2
+		summarizeBy: none
+		sourceColumn: Column1
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	partition _Medidas = m
+		mode: import
+		source =
+				let
+				    Source = Table.FromRows(Json.Document(Binary.Decompress(Binary.FromText("i44FAA==", BinaryEncoding.Base64), Compression.Deflate)), let _t = ((type nullable text) meta [Serialized.Text = true]) in type table [Column1 = _t]),
+				    #"Changed Type" = Table.TransformColumnTypes(Source,{{"Column1", type text}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_ResultType = Table
+

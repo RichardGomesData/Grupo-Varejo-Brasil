@@ -1,0 +1,34 @@
+table tbDepto
+	lineageTag: f05ecbf7-8403-48b6-9e35-c2cee88d4e89
+
+	column CodDepto
+		dataType: int64
+		formatString: 0
+		lineageTag: 35649d88-61ee-4deb-9f6b-89d3ebf23f96
+		summarizeBy: none
+		sourceColumn: CodDepto
+
+		annotation SummarizationSetBy = Automatic
+
+	column DescDepto
+		dataType: string
+		lineageTag: b7809162-86e3-46b1-b137-6e293e554ab7
+		summarizeBy: none
+		sourceColumn: DescDepto
+
+		annotation SummarizationSetBy = Automatic
+
+	partition tbDepto = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents("D:\Power BI EBAC\M2\M2 - tbDepto.csv"),[Delimiter=";", Columns=2, Encoding=65001, QuoteStyle=QuoteStyle.None]),
+				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"CodDepto", Int64.Type}, {"DescDepto", type text}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

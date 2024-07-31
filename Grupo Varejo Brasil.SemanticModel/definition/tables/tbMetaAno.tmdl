@@ -1,0 +1,34 @@
+table tbMetaAno
+	lineageTag: ea7609ad-73e0-496e-876e-4c757b601b6e
+
+	column Ano
+		dataType: int64
+		formatString: 0
+		lineageTag: 6a4ed5a7-6865-4298-bd74-0e1623598444
+		summarizeBy: none
+		sourceColumn: Ano
+
+		annotation SummarizationSetBy = Automatic
+
+	column Destino
+		dataType: int64
+		formatString: 0
+		lineageTag: 74211c39-a0a1-4903-aa58-542ae4d0eaba
+		summarizeBy: none
+		sourceColumn: Destino
+
+		annotation SummarizationSetBy = Automatic
+
+	partition tbMetaAno = m
+		mode: import
+		source =
+				let
+				    Source = Excel.Workbook(File.Contents("D:\Power BI EBAC\M5\Power BI_M5_support material_assignment01.xlsx"), null, true),
+				    tbMetaAno_Sheet = Source{[Item="tbMetaAno",Kind="Sheet"]}[Data],
+				    #"Promoted Headers" = Table.PromoteHeaders(tbMetaAno_Sheet, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"Ano", Int64.Type}, {"Destino", Int64.Type}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_ResultType = Table
+
